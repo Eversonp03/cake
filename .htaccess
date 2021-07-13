@@ -1,0 +1,15 @@
+RewriteEngine On
+#DESATIVADO PARA LOCALHOST APENAS
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP_HOST} acw\.empreender\.com\.br
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
+
+RewriteRule ^(blog)($|/) - [L]
+RewriteRule ^(css|js)/(\d+)/(.+)$ ./estatico/$1.php?v=$2&f=$3 [L]
+RewriteRule ^img/(\d+)x(\d+)(?:c(\d+)c(\d+)c(\d+)c(\d+))?/(.+)$ ./estatico/img.php?w=$1&h=$2&img=$7&c=$3,$4,$5,$6 [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L]
+
+AddHandler cgi-script .cgi .pl .py
